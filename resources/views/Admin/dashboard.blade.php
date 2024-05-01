@@ -23,7 +23,7 @@
                     <p class="text-gray-600">You have {{ $pendingReq }} pending request(s)</p>
                 </div>
             </a>
-            <a href="#" class="card bg-white shadow-md rounded-lg overflow-hidden transition-transform hover:translate-y-1 hover:shadow-lg">
+            <a href="{{route('admin.manage-leave')}}" class="card bg-white shadow-md rounded-lg overflow-hidden transition-transform hover:translate-y-1 hover:shadow-lg">
                 <div class="card-content p-4">
                     <h2 class="text-lg font-semibold">Manage Leave</h2>
                     <p class="text-gray-600">You have {{ $pendingReq }} pending request(s)</p>

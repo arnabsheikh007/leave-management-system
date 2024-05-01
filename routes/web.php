@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\LeaveManageController;
 use App\Http\Controllers\User\LeaveRequestController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\ProfileController;
@@ -41,7 +42,9 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::get('/admin/block-employee/{id}', [EmployeeController::class,'blockEmployee'])->name('admin.block-employee');
     Route::get('/admin/unblock-employee/{id}', [EmployeeController::class,'unblockEmployee'])->name('admin.unblock-employee');
 
-    Route::get('/admin/manage-leave', [LeaveRequestController::class,'index'])->name('admin.manage-leave');
+    Route::get('/admin/manage-leave', [LeaveManageController::class,'index'])->name('admin.manage-leave');
+    Route::get('/admin/approve-leave/{id}', [LeaveManageController::class,'approveLeave'])->name('admin.approve-leave');
+    Route::get('/admin/reject-leave/{id}', [LeaveManageController::class,'rejectLeave'])->name('admin.reject-leave');
 
 });
 
