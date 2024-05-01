@@ -9,13 +9,19 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    if(auth()->check() && auth()->user()->role == 'admin')
+        return redirect()->route('admin.dashboard');
+    else if(auth()->check() && auth()->user()->role == 'user')
+        return redirect()->route('dashboard');
+
+    return redirect()->route('login');
 });
 
-//Route::get('/dashboard', function () {
-//    return view('dashboard');
-//})->middleware(['auth', 'verified'])->name('dashboard');
-//Route::get('/dashboard',[UserController::class,'index'] )->middleware(['auth', 'verified'])->name('dashboard');
+
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
