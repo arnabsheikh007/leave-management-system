@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\ProfileController;
@@ -26,7 +27,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [HomeController::class,'index'])->name('admin.dashboard');
-    Route::get('/admin/manage-employee', [\App\Http\Controllers\Admin\EmployeeController::class,'index'])->name('admin.manage-employee');
+    Route::get('/admin/manage-employee', [EmployeeController::class,'index'])->name('admin.manage-employee');
+    Route::get('/admin/approve-employee/{id}', [EmployeeController::class,'approveEmployee'])->name('admin.approve-employee');
+    Route::get('/admin/block-employee/{id}', [EmployeeController::class,'blockEmployee'])->name('admin.block-employee');
+    Route::get('/admin/unblock-employee/{id}', [EmployeeController::class,'unblockEmployee'])->name('admin.unblock-employee');
 });
 
 
