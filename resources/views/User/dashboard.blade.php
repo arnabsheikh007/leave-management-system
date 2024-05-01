@@ -83,6 +83,7 @@
                                         <th class="px-4 py-2 text-start">To</th>
                                         <th class="px-4 py-2 text-start">Reason</th>
                                         <th class="px-4 py-2 text-center">Status</th>
+                                        <th class="px-4 py-2 text-center">Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -98,10 +99,28 @@
                                             <td class="px-4 py-2">{{ $leaveRequest->leave_from }}</td>
                                             <td class="px-4 py-2">{{ $leaveRequest->leave_to }}</td>
                                             <td class="px-4 py-2">{{ $leaveRequest->reason }}</td>
+                                            <td class="px-4 py-2 text-center"> {{ $leaveRequest->status }} </td>
                                             <td class="px-4 py-2 text-center">
-                                                <a href="" style="background-color:#68D391" class="text-white font-bold py-2 px-4 rounded">
-                                                    {{ $leaveRequest->status }}
-                                                </a>
+                                                @if($leaveRequest->status === 'Pending')
+                                                    <div class="flex gap-2 justify-center">
+                                                        <a href="{{route('leave-request.edit', $leaveRequest->id)}}" style="background-color:#3f35da" class="text-white font-bold py-2 px-4 rounded">
+                                                            edit
+                                                        </a>
+                                                        <form action="{{ route('leave-request.destroy', $leaveRequest->id) }}" method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" style="background-color:#cd3952" class="text-white font-bold py-2 px-4 rounded">
+                                                                Delete
+                                                            </button>
+                                                        </form>
+
+                                                    </div>
+                                                @else
+                                                    <div>
+                                                        -
+                                                    </div>
+                                                @endif
+
                                             </td>
                                         </tr>
                                     @endforeach

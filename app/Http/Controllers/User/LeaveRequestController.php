@@ -49,7 +49,8 @@ class LeaveRequestController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $leaveRequest = auth()->user()->employee->leaveRequests()->findOrFail($id);
+        return view('user.leave-request.edit', compact('leaveRequest', 'leaveRequest'));
     }
 
     /**
@@ -57,14 +58,27 @@ class LeaveRequestController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $leaveRequest = auth()->user()->employee->leaveRequests()->findOrFail($id);
+        $request->validate([
+            'leave_from' => 'required|date',
+            'leave_to' => 'required|date|after_or_equal:leave_from',
+            'leave_type' => 'required|string',
+        ], [
+            'leave_to.after_or_equal' => 'The "Leave To" date must be after or equal to the "Leave From" date.',
+        ]);
+        $leaveRequest->update($request->all());
+
+        return redirect()->route('dashboard')->with('success', 'Leave request updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): \Illuminate\Http\RedirectResponse
     {
-        //
+        $leaveRequest = auth()->user()->employee->leaveRequests()->findOrFail($id);
+        $leaveRequest->delete();
+
+        return redirect()->route('dashboard')->with('Success', 'Leave request deleted successfully.');
     }
 }

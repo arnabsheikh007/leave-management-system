@@ -27,6 +27,10 @@ Route::middleware(['auth', 'verified', 'user'])->group(function () {
 
     Route::get('/leave-request/create', [LeaveRequestController::class,'create'])->name('leave-request.create');
     Route::post('/leave-request', [LeaveRequestController::class,'store'])->name('leave-request.store');
+    Route::get('/leave-request/{id}', [LeaveRequestController::class,'show'])->name('leave-request.show');
+    Route::get('/leave-request/{id}/edit', [LeaveRequestController::class,'edit'])->name('leave-request.edit');
+    Route::put('/leave-request/{id}', [LeaveRequestController::class,'update'])->name('leave-request.update');
+    Route::delete('/leave-request/{id}', [LeaveRequestController::class,'destroy'])->name('leave-request.destroy');
 });
 
 Route::middleware(['auth', 'verified', 'admin'])->group(function () {
@@ -36,6 +40,9 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::get('/admin/approve-employee/{id}', [EmployeeController::class,'approveEmployee'])->name('admin.approve-employee');
     Route::get('/admin/block-employee/{id}', [EmployeeController::class,'blockEmployee'])->name('admin.block-employee');
     Route::get('/admin/unblock-employee/{id}', [EmployeeController::class,'unblockEmployee'])->name('admin.unblock-employee');
+
+    Route::get('/admin/manage-leave', [LeaveRequestController::class,'index'])->name('admin.manage-leave');
+
 });
 
 
