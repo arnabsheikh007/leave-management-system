@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\User\LeaveRequestController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -23,10 +24,14 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'verified', 'user'])->group(function () {
     Route::get('/dashboard', [UserController::class,'index'])->name('dashboard');
+
+    Route::get('/leave-request/create', [LeaveRequestController::class,'create'])->name('leave-request.create');
+    Route::post('/leave-request', [LeaveRequestController::class,'store'])->name('leave-request.store');
 });
 
 Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [HomeController::class,'index'])->name('admin.dashboard');
+
     Route::get('/admin/manage-employee', [EmployeeController::class,'index'])->name('admin.manage-employee');
     Route::get('/admin/approve-employee/{id}', [EmployeeController::class,'approveEmployee'])->name('admin.approve-employee');
     Route::get('/admin/block-employee/{id}', [EmployeeController::class,'blockEmployee'])->name('admin.block-employee');

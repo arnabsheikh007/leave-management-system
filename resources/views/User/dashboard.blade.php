@@ -18,10 +18,17 @@
             </div>
         </div>
     @else
+
+        @if(session('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" style="background-color: #68D391" role="alert">
+                <strong class="font-bold">Success!</strong>
+                <span class="block sm:inline">{{ session('success') }}</span>
+            </div>
+        @endif
         <div class="py-10">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <a href="#" class="block p-6 text-gray-900 text-center hover:underline">
+                    <a href="{{route('leave-request.create')}}" class="block p-6 text-gray-900 text-center hover:underline">
                         {{ __("Create a leave request") }}
                     </a>
                 </div>
@@ -87,10 +94,10 @@
                                     @foreach($leaveRequests as $leaveRequest)
                                         <tr class="hover:bg-gray-100">
                                             <td class="px-4 py-2 text-center">{{ ($leaveRequests->currentPage()-1) * $leaveRequests->perPage() + $loop->iteration }}</td>
-                                            <td class="px-4 py-2">{{ $leaveRequest->type }}</td>
-                                            <td class="px-4 py-2">{{ $leaveRequest->from }}</td>
-                                            <td class="px-4 py-2">{{ $leaveRequest->to }}</td>
-                                            <td class="px-4 py-2">{{ $leaveRequest->duration }}</td>
+                                            <td class="px-4 py-2">{{ $leaveRequest->leave_type }}</td>
+                                            <td class="px-4 py-2">{{ $leaveRequest->leave_from }}</td>
+                                            <td class="px-4 py-2">{{ $leaveRequest->leave_to }}</td>
+                                            <td class="px-4 py-2">{{ $leaveRequest->reason }}</td>
                                             <td class="px-4 py-2 text-center">
                                                 <a href="" style="background-color:#68D391" class="text-white font-bold py-2 px-4 rounded">
                                                     {{ $leaveRequest->status }}
