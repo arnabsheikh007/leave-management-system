@@ -15,6 +15,8 @@
             </div>
         </div>
     </div>
+
+
     <div class="container mx-auto py-8 px-4">
         <div class="grid grid-cols-2 gap-4">
             <a href="{{ route('admin.manage-employee') }}" class="card bg-white shadow-md rounded-lg overflow-hidden transition-transform hover:translate-y-1 hover:shadow-lg">

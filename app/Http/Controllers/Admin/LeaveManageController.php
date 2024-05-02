@@ -23,7 +23,8 @@ class LeaveManageController extends Controller
             ->with('employee.user')
             ->latest()
             ->paginate(5);
-        return view('admin.manageLeave', compact('pendingLeaveRequests','pendingLeaveRequests', 'otherLeaveRequests','otherLeaveRequests'));
+        $leaveRequests = LeaveRequest::all();
+        return view('admin.manageLeave', compact('pendingLeaveRequests','pendingLeaveRequests', 'otherLeaveRequests','otherLeaveRequests', 'leaveRequests','leaveRequests'));
     }
 
     public function approveLeave(Request $request): RedirectResponse

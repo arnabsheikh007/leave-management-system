@@ -11,6 +11,33 @@
         </div>
     @endif
 
+    <div class="py-10">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6">
+                    <table class="w-full table-auto">
+                        <thead>
+                        <tr>
+                            <th class="px-4 py-2">Pending Requests</th>
+                            <th class="px-4 py-2">Approved Requests</th>
+                            <th class="px-4 py-2">Rejected Requests</th>
+                            <th class="px-4 py-2">Total Requests</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="px-4 py-2 text-center">{{ $leaveRequests->where('status', 'Pending')->count() }}</td>
+                            <td class="px-4 py-2 text-center">{{ $leaveRequests->where('status', 'Approved')->count() }}</td>
+                            <td class="px-4 py-2 text-center">{{ $leaveRequests->where('status', 'Rejected')->count() }}</td>
+                            <td class="px-4 py-2 text-center">{{ $leaveRequests->count() }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="py-10">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
