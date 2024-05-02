@@ -32,6 +32,7 @@
                                     <th class="px-4 py-2 text-start">Leave Type</th>
                                     <th class="px-4 py-2 text-start">From</th>
                                     <th class="px-4 py-2 text-start">To</th>
+                                    <th class="px-4 py-2 text-start">Duration</th>
                                     <th class="px-4 py-2 text-start">Reason</th>
                                     <th class="px-4 py-2 text-center">Action</th>
                                 </tr>
@@ -39,7 +40,7 @@
                                 <tbody>
                                 @if($pendingLeaveRequests == null || $pendingLeaveRequests->isEmpty())
                                     <tr>
-                                        <td colspan="7" class="text-center">No Leave Request</td>
+                                        <td colspan="8" class="text-center">No Leave Request</td>
                                     </tr>
                                 @endif
                                 @foreach($pendingLeaveRequests as $pendingLeaveRequest)
@@ -49,6 +50,7 @@
                                         <td class="px-4 py-2">{{ $pendingLeaveRequest->leave_type }}</td>
                                         <td class="px-4 py-2">{{ $pendingLeaveRequest->leave_from }}</td>
                                         <td class="px-4 py-2">{{ $pendingLeaveRequest->leave_to }}</td>
+                                        <td class="px-4 py-2">{{ \Carbon\Carbon::parse($pendingLeaveRequest->leave_from)->diffInDays(\Carbon\Carbon::parse($pendingLeaveRequest->leave_to)) }} days</td>
                                         <td class="px-4 py-2">{{ $pendingLeaveRequest->reason }}</td>
                                         <td class="px-4 py-2 text-center">
                                             <div class="flex gap-2 justify-center">
@@ -96,6 +98,7 @@
                                     <th class="px-4 py-2 text-start">Leave Type</th>
                                     <th class="px-4 py-2 text-start">From</th>
                                     <th class="px-4 py-2 text-start">To</th>
+                                    <th class="px-4 py-2 text-start">Duration</th>
                                     <th class="px-4 py-2 text-start">Reason</th>
                                     <th class="px-4 py-2 text-center">Status</th>
                                 </tr>
@@ -103,7 +106,7 @@
                                 <tbody>
                                 @if($otherLeaveRequests == null || $otherLeaveRequests->isEmpty())
                                     <tr>
-                                        <td colspan="7" class="text-center">No Leave Request</td>
+                                        <td colspan="8" class="text-center">No Leave Request</td>
                                     </tr>
                                 @endif
                                 @foreach($otherLeaveRequests as $otherLeaveRequest)
@@ -113,6 +116,7 @@
                                         <td class="px-4 py-2">{{ $otherLeaveRequest->leave_type }}</td>
                                         <td class="px-4 py-2">{{ $otherLeaveRequest->leave_from }}</td>
                                         <td class="px-4 py-2">{{ $otherLeaveRequest->leave_to }}</td>
+                                        <td class="px-4 py-2">{{ \Carbon\Carbon::parse($otherLeaveRequest->leave_from)->diffInDays(\Carbon\Carbon::parse($otherLeaveRequest->leave_to)) }} days</td>
                                         <td class="px-4 py-2">{{ $otherLeaveRequest->reason }}</td>
                                         <td class="px-4 py-2 text-center">
                                             <div class="flex gap-2 justify-center">
