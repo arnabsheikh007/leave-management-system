@@ -89,7 +89,7 @@
                                     <tbody>
                                     @if($leaveRequests == null || $leaveRequests->isEmpty())
                                         <tr>
-                                            <td colspan="4" class="text-center">No Leave Request</td>
+                                            <td colspan="7" class="text-center">No Leave Request</td>
                                         </tr>
                                     @endif
                                     @foreach($leaveRequests as $leaveRequest)

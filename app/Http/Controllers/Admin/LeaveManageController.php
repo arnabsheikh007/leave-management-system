@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\LeaveRequestApproved;
+use App\Mail\LeaveRequestRejected;
 use App\Models\LeaveRequest;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
@@ -10,6 +12,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class LeaveManageController extends Controller
 {
@@ -47,6 +50,17 @@ class LeaveManageController extends Controller
         }
         $employee->total_leave += $duration;
         $employee->save();
+
+        $mailData = [
+            'employee_name' => $employee->user->name,
+            'leave_from' => $leaveRequest->leave_from,
+            'leave_to' => $leaveRequest->leave_to,
+            'leave_type' => $leaveRequest->leave_type,
+            'reason' => $leaveRequest->reason,
+        ];
+
+        mail::to($employee->user->email)->send(new LeaveRequestApproved($mailData));
+
         return redirect()->back()->with('success', 'Leave request approved successfully');
     }
 
@@ -55,6 +69,18 @@ class LeaveManageController extends Controller
         $leaveRequest = LeaveRequest::find($request->id);
         $leaveRequest->status = 'Rejected';
         $leaveRequest->save();
+
+        $employee = $leaveRequest->employee;
+        $mailData = [
+            'employee_name' => $employee->user->name,
+            'leave_from' => $leaveRequest->leave_from,
+            'leave_to' => $leaveRequest->leave_to,
+            'leave_type' => $leaveRequest->leave_type,
+            'reason' => $leaveRequest->reason,
+        ];
+
+        mail::to($employee->user->email)->send(new LeaveRequestRejected($mailData));
+
         return redirect()->back()->with('success', 'Leave request rejected successfully');
     }
 }

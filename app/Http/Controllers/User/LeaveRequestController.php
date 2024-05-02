@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Mail\LeaveRequestSubmission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class LeaveRequestController extends Controller
 {
@@ -35,6 +37,17 @@ class LeaveRequestController extends Controller
         ]);
         $employee = $request->user()->employee;
         $employee->leaveRequests()->create($request->all());
+
+
+        $mailData = [
+            'employee_name' => $employee->user->name,
+            'leave_from' => $request->leave_from,
+            'leave_to' => $request->leave_to,
+            'leave_type' => $request->leave_type,
+            'reason' => $request->reason,
+        ];
+
+        mail::to($employee->user->email)->send(new LeaveRequestSubmission($mailData));
 
         return redirect()->route('dashboard')->with('success', 'Leave request submitted successfully.');
     }
