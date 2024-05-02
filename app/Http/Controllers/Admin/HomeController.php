@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\LeaveRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -13,6 +14,7 @@ class HomeController extends Controller
         $pendingReq = User::whereDoesntHave('employee')
             ->where('role', '!=', 'admin')
             ->count();
-        return view('admin.dashboard',compact('pendingReq','pendingReq' ));
+        $leaveRequests = LeaveRequest::where('status', 'pending')->count();
+        return view('admin.dashboard',compact('pendingReq','pendingReq','leaveRequests','leaveRequests' ));
     }
 }
